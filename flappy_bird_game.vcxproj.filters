@@ -68,4 +68,15 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resources\Sounds\Hit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Point.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Resources\Sounds\Wing.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

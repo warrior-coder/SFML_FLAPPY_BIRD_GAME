@@ -9,8 +9,20 @@
 
 Bird::Bird() 
 {
-	image.loadFromFile("Resources/Images/Bird.png");
 	reset();
+	
+	// load image
+	image.loadFromFile("Resources/Images/Bird.png");
+
+	// load sound
+	hitSoundBuffer.loadFromFile("Resources/Sounds/Hit.wav");
+	hitSound.setBuffer(hitSoundBuffer);
+
+	pointSoundBuffer.loadFromFile("Resources/Sounds/Point.wav");
+	pointSound.setBuffer(pointSoundBuffer);
+
+	wingSoundBuffer.loadFromFile("Resources/Sounds/Wing.wav");
+	wingSound.setBuffer(wingSoundBuffer);
 }
 
 bool Bird::isDead() const
@@ -66,9 +78,15 @@ void Bird::update(std::vector<Pipe> pipes)
 
 	if (!dead)
 	{
-		if (ySpeed >= 0.0f && y >= 0.0f && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+		if (
+			ySpeed >= 0.0f &&
+			y >= 0.0f &&
+			sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
+		)
 		{
 			ySpeed = FLAP_SPEED;
+
+			wingSound.play();
 		}
 
 		for (auto& pipe : pipes)
@@ -77,6 +95,11 @@ void Bird::update(std::vector<Pipe> pipes)
 			{
 				if (y > GAP_HEIGHT + pipe.getY() - BIRD_SIZE || y < pipe.getY())
 				{
+					if (!dead)
+					{
+						hitSound.play();
+					}
+
 					dead = true;
 					ySpeed = 0.0f;
 				}
@@ -84,12 +107,19 @@ void Bird::update(std::vector<Pipe> pipes)
 			else if (x == pipe.getX() + 2 * BIRD_SIZE)
 			{
 				score++;
+
+				pointSound.play();
 			}
 		}
 	}
 
 	if (y >= GROUND_Y - BIRD_SIZE)
 	{
+		if (!dead)
+		{
+			hitSound.play();
+		}
+
 		dead = true;
 		ySpeed = 0.0f;
 		y = GROUND_Y - BIRD_SIZE;

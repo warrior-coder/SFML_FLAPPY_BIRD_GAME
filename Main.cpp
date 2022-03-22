@@ -1,6 +1,7 @@
 #include <chrono>
 #include <random>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "Global.hpp"
 #include "Pipe.hpp"
@@ -18,6 +19,7 @@ int main()
 	// initialize random engine
 	std::default_random_engine randomEngine(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
 
+	// window event
 	sf::Event event;
 	
 	// initialize window
@@ -33,17 +35,18 @@ int main()
 	sf::Sprite backgroundSprite, groundSprite;
 
 	backgroundTexture.loadFromFile("Resources/Images/Background.png");
-	groundSprite.setPosition(0, 0);
+	backgroundSprite.setPosition(0.0f, 0.0f);
 	backgroundSprite.setTexture(backgroundTexture);
 
 	groundTexture.loadFromFile("Resources/Images/Ground.png");
-	groundSprite.setPosition(0, GROUND_Y);
+	groundSprite.setPosition(0.0f, GROUND_Y);
 	groundSprite.setTexture(groundTexture);
 
 	// frame time variables
 	std::chrono::microseconds deltaTime;
 	std::chrono::steady_clock::time_point previousTime = std::chrono::steady_clock::now();
 	std::chrono::microseconds durationTime(0);
+
 
 	while (window.isOpen())
 	{
@@ -74,6 +77,7 @@ int main()
 
 			// move bird and pipes
 			bird.update(pipesManager.getPipes());
+
 			if (!bird.isDead())
 			{
 				pipesManager.update(randomEngine);

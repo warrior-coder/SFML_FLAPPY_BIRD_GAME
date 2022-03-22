@@ -1,5 +1,7 @@
 #pragma once
 
+#include <SFML/Audio.hpp>
+
 #include "Pipe.hpp"
 
 
@@ -16,6 +18,15 @@ class Bird
 	sf::Image image;
 	sf::Texture texture;
 	sf::Sprite sprite;
+
+	sf::SoundBuffer hitSoundBuffer;
+	sf::Sound hitSound;
+
+	sf::SoundBuffer wingSoundBuffer;
+	sf::Sound wingSound;
+
+	sf::SoundBuffer pointSoundBuffer;
+	sf::Sound pointSound;
 
 public:
 	Bird();
