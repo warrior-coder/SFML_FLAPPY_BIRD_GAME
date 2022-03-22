@@ -1,5 +1,9 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
+
+#include "Global.hpp"
+
 
 void drawText(
 	const sf::Color& color,

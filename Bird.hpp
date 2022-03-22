@@ -19,20 +19,13 @@ class Bird
 	sf::Texture texture;
 	sf::Sprite sprite;
 
-	sf::SoundBuffer hitSoundBuffer;
-	sf::Sound hitSound;
-
-	sf::SoundBuffer wingSoundBuffer;
-	sf::Sound wingSound;
-
-	sf::SoundBuffer pointSoundBuffer;
-	sf::Sound pointSound;
+	sf::SoundBuffer hitSoundBuffer, wingSoundBuffer, pointSoundBuffer;
+	sf::Sound hitSound, wingSound, pointSound;
 
 public:
 	Bird();
 
 	bool isDead() const;
-	
 	float getY() const;
 	unsigned short getScore() const;
 	

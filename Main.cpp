@@ -47,6 +47,7 @@ int main()
 	std::chrono::steady_clock::time_point timePointBegin = std::chrono::steady_clock::now();
 	std::chrono::milliseconds deltaTime;
 
+	// main game loop
 	while (window.isOpen())
 	{
 		// calculate frame duration

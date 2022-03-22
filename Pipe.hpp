@@ -1,9 +1,9 @@
 #pragma once
 
-#include <chrono>
 #include <SFML/Graphics.hpp>
 
 #include "Global.hpp"
+
 
 class Pipe
 {

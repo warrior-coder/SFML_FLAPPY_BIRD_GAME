@@ -1,8 +1,6 @@
 #pragma once
 
-#include <chrono>
 #include <random>
-#include <SFML/Graphics.hpp>
 
 #include "Global.hpp"
 #include "Pipe.hpp"
@@ -18,7 +16,7 @@ class PipesManager
 public:
 	PipesManager();
 	
-	std::vector<Pipe> getPipes();
+	std::vector<Pipe> getPipes() const;
 	
 	void draw(sf::RenderWindow& window);
 	void reset();

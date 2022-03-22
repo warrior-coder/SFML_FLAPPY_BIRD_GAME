@@ -8,7 +8,7 @@ PipesManager::PipesManager()
 
 void PipesManager::draw(sf::RenderWindow& window)
 {
-	for (Pipe& pipe : pipes)
+	for (auto& pipe : pipes)
 	{
 		pipe.draw(window);
 	}
@@ -16,23 +16,25 @@ void PipesManager::draw(sf::RenderWindow& window)
 
 void PipesManager::reset()
 {
-	generatorTimer = GENERATOR_TIMER_DURATION;
+	generatorTimer = GENERATOR_TIMER_DURATION / 2;
 	pipes.clear();
 }
 
 void PipesManager::update(std::default_random_engine& randomEngine)
 {
-	if (generatorTimer <= 0)
+	// if time to generate new pipe
+	if (generatorTimer > GENERATOR_TIMER_DURATION)
 	{
-		generatorTimer = GENERATOR_TIMER_DURATION;
+		generatorTimer = 0;
 
 		pipes.push_back(
 			Pipe(SCREEN_WIDTH, yDistribution(randomEngine))
 		);
 	}
-	generatorTimer--;
+	generatorTimer++;
 
-	for (Pipe& pipe : pipes)
+	// update every pipe
+	for (auto& pipe : pipes)
 	{
 		pipe.update();
 	}
@@ -43,12 +45,13 @@ void PipesManager::update(std::default_random_engine& randomEngine)
 		if (itPipe->isGone())
 		{
 			pipes.erase(itPipe);
+
 			break;
 		}
 	}
 }
 
-std::vector<Pipe> PipesManager::getPipes()
+std::vector<Pipe> PipesManager::getPipes() const
 {
 	return pipes;
 }

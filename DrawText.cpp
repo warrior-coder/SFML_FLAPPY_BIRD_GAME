@@ -1,6 +1,3 @@
-#include <SFML/Graphics.hpp>
-
-#include "Global.hpp"
 #include "DrawText.hpp"
 
 
