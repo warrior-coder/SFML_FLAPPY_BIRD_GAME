@@ -37,6 +37,7 @@
     <Image Include="Resources\Images\Bird.png" />
     <Image Include="Resources\Images\Font.png" />
     <Image Include="Resources\Images\Ground.png" />
+    <Image Include="Resources\Images\Icon.PNG" />
     <Image Include="Resources\Images\Pipe.png" />
   </ItemGroup>
   <ItemGroup>

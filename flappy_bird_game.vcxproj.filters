@@ -64,6 +64,9 @@
     <Image Include="Resources\Images\Pipe.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\Images\Icon.PNG">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

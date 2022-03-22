@@ -42,6 +42,12 @@ int main()
 	groundSprite.setPosition(0.0f, GROUND_Y);
 	groundSprite.setTexture(groundeltaTimeexture);
 
+	// set window icon
+	sf::Image windowIcon;
+
+	windowIcon.loadFromFile("Resources/Images/Icon.png");
+	window.setIcon(windowIcon.getSize().x, windowIcon.getSize().y, windowIcon.getPixelsPtr());
+
 	// frame time variables
 	std::chrono::steady_clock::time_point timePointEnd;
 	std::chrono::steady_clock::time_point timePointBegin = std::chrono::steady_clock::now();
