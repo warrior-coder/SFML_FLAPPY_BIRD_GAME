@@ -1,7 +1,5 @@
 #pragma once
 
-#include <chrono>
-
 
 // bird properties
 const float FLAP_SPEED = -4.0f;
@@ -27,5 +25,5 @@ const int SCREEN_HEIGHT = 320;
 const int SCREEN_WIDTH = 180;
 const float SCREEN_RESIZE = 3.0f;
 
-// frame
-const std::chrono::microseconds FRAME_DURATION(16667);
+// frame duration
+const long long MILLISECONDS_FRAME_DURATION(17);

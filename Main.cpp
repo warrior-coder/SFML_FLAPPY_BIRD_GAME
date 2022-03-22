@@ -21,7 +21,7 @@ int main()
 
 	// window event
 	sf::Event event;
-	
+
 	// initialize window
 	sf::RenderWindow window(
 		sf::VideoMode(static_cast<unsigned int>(SCREEN_RESIZE * SCREEN_WIDTH), static_cast<unsigned int>(SCREEN_RESIZE * SCREEN_HEIGHT)),
@@ -31,34 +31,30 @@ int main()
 	window.setView(sf::View(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)));
 
 	// prepare backgroung and ground
-	sf::Texture backgroundTexture, groundTexture;
+	sf::Texture backgroundeltaTimeexture, groundeltaTimeexture;
 	sf::Sprite backgroundSprite, groundSprite;
 
-	backgroundTexture.loadFromFile("Resources/Images/Background.png");
+	backgroundeltaTimeexture.loadFromFile("Resources/Images/Background.png");
 	backgroundSprite.setPosition(0.0f, 0.0f);
-	backgroundSprite.setTexture(backgroundTexture);
+	backgroundSprite.setTexture(backgroundeltaTimeexture);
 
-	groundTexture.loadFromFile("Resources/Images/Ground.png");
+	groundeltaTimeexture.loadFromFile("Resources/Images/Ground.png");
 	groundSprite.setPosition(0.0f, GROUND_Y);
-	groundSprite.setTexture(groundTexture);
+	groundSprite.setTexture(groundeltaTimeexture);
 
 	// frame time variables
-	std::chrono::microseconds deltaTime;
-	std::chrono::steady_clock::time_point previousTime = std::chrono::steady_clock::now();
-	std::chrono::microseconds durationTime(0);
-
+	std::chrono::steady_clock::time_point timePointEnd;
+	std::chrono::steady_clock::time_point timePointBegin = std::chrono::steady_clock::now();
+	std::chrono::milliseconds deltaTime;
 
 	while (window.isOpen())
 	{
-		// count frame duration
-		deltaTime = std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::steady_clock::now() - previousTime);
-		durationTime += deltaTime;
-		previousTime += deltaTime;
+		// calculate frame duration
+		timePointEnd = std::chrono::steady_clock::now();
+		deltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(timePointEnd - timePointBegin);
 
-		while (FRAME_DURATION <= durationTime)
+		if (deltaTime.count() > MILLISECONDS_FRAME_DURATION)
 		{
-			durationTime -= FRAME_DURATION;
-			
 			// handle events
 			while (window.pollEvent(event))
 			{
@@ -89,19 +85,20 @@ int main()
 			}
 
 			// draw the screen frame
-			if (FRAME_DURATION > durationTime)
-			{
-				window.clear(sf::Color::Black);
-				window.draw(backgroundSprite);
+			window.clear(sf::Color::Black);
+			window.draw(backgroundSprite);
 
-				pipesManager.draw(window);
-				bird.draw(window);
+			pipesManager.draw(window);
+			bird.draw(window);
 
-				drawText(sf::Color::Black, true, false, 0, SCREEN_HEIGHT / 20, std::to_string(bird.getScore()), window);
-				window.draw(groundSprite);
+			drawText(sf::Color::Black, true, false, 0, SCREEN_HEIGHT / 20, std::to_string(bird.getScore()), window);
+			window.draw(groundSprite);
 
-				window.display();
-			}
+			// display drawings
+			window.display();
+
+			// remember new time point
+			timePointBegin = timePointEnd;
 		}
 	}
 
