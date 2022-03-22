@@ -68,7 +68,7 @@ void Bird::reset()
 
 	ySpeed = 0.0f;
 
-	score = 0;
+	score = 99;
 }
 
 void Bird::update(std::vector<Pipe> pipes)

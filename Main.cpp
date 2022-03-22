@@ -7,7 +7,7 @@
 #include "Pipe.hpp"
 #include "Bird.hpp"
 #include "PipesManager.hpp"
-#include "DrawText.hpp"
+#include "ImageText.hpp"
 
 
 int main()
@@ -47,6 +47,11 @@ int main()
 
 	windowIcon.loadFromFile("Resources/Images/Icon.png");
 	window.setIcon(windowIcon.getSize().x, windowIcon.getSize().y, windowIcon.getPixelsPtr());
+
+	// use font from image to draw text
+	ImageText scoreText;
+
+	scoreText.setColor(sf::Color::Black);
 
 	// frame time variables
 	std::chrono::steady_clock::time_point timePointEnd;
@@ -98,7 +103,18 @@ int main()
 			pipesManager.draw(window);
 			bird.draw(window);
 
-			drawText(sf::Color::Black, true, false, 0, SCREEN_HEIGHT / 20, std::to_string(bird.getScore()), window);
+			// show score
+			scoreText.setText(
+				std::to_string(bird.getScore())
+			);
+			scoreText.setPosition(
+				(SCREEN_WIDTH - scoreText.getWidth()) / 2,
+				SCREEN_HEIGHT / 20
+			);
+
+			scoreText.draw(window);
+
+			// draw ground after pipes to close them
 			window.draw(groundSprite);
 
 			// display drawings

@@ -20,14 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bird.cpp" />
-    <ClCompile Include="DrawText.cpp" />
+    <ClCompile Include="ImageText.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PipesManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bird.hpp" />
-    <ClInclude Include="DrawText.hpp" />
+    <ClInclude Include="ImageText.hpp" />
     <ClInclude Include="Global.hpp" />
     <ClInclude Include="Pipe.hpp" />
     <ClInclude Include="PipesManager.hpp" />

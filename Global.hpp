@@ -9,7 +9,7 @@ const int BIRD_SIZE = 16;
 const int BIRD_START_X = 37;
 
 // font
-const int FONT_HEIGHT = 32;
+const int FONT_CHARACTERS_COUNT = 96;
 
 // pipe
 const int PIPE_INDENT = 32;					// minimum indent from the ground and from the top to the gap
