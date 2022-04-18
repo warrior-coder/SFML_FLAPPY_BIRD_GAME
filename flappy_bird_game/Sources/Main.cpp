@@ -9,8 +9,8 @@
 
 
 /*
-SFML (Simple and Fast Multimedia Library) – cross-platform software development library designed to provide a simple API to various multimedia components
- */
+SFML (Simple and Fast Multimedia Library) – cross-platform object-oriented multimedia API, which provides access to windowing, graphics, audio, network
+*/
 
 
 int main()
@@ -34,16 +34,16 @@ int main()
 	window.setView(sf::View(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)));
 
 	// prepare backgroung and ground
-	sf::Texture backgroundeltaTimeexture, groundeltaTimeexture;
+	sf::Texture backgroundTexture, groundTexture;
 	sf::Sprite backgroundSprite, groundSprite;
 
-	backgroundeltaTimeexture.loadFromFile("Resources/Images/Background.png");
+	backgroundTexture.loadFromFile("Resources/Images/Background.png");
 	backgroundSprite.setPosition(0.0f, 0.0f);
-	backgroundSprite.setTexture(backgroundeltaTimeexture);
+	backgroundSprite.setTexture(backgroundTexture);
 
-	groundeltaTimeexture.loadFromFile("Resources/Images/Ground.png");
+	groundTexture.loadFromFile("Resources/Images/Ground.png");
 	groundSprite.setPosition(0.0f, GROUND_Y);
-	groundSprite.setTexture(groundeltaTimeexture);
+	groundSprite.setTexture(groundTexture);
 
 	// set window icon
 	sf::Image windowIcon;
