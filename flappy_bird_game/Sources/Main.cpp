@@ -8,6 +8,11 @@
 #include "ImageText.hpp"
 
 
+/*
+SFML (Simple and Fast Multimedia Library) – cross-platform software development library designed to provide a simple API to various multimedia components
+ */
+
+
 int main()
 {
 	// main game objects
