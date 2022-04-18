@@ -20,10 +20,12 @@ int main()
 	PipesManager pipesManager;
 
 	// initialize random engine
-	std::default_random_engine randomEngine(static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count()));
+	std::default_random_engine randomEngine(
+		static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count())
+	);
 
 	// window event
-	sf::Event event;
+	sf::Event event{};
 
 	// initialize window
 	sf::RenderWindow window(
@@ -33,13 +35,17 @@ int main()
 	);
 	window.setView(sf::View(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)));
 
-	// prepare backgroung and ground
-	sf::Texture backgroundTexture, groundTexture;
-	sf::Sprite backgroundSprite, groundSprite;
+	// prepare background
+	sf::Texture backgroundTexture;
+	sf::Sprite backgroundSprite;
 
 	backgroundTexture.loadFromFile("Resources/Images/Background.png");
 	backgroundSprite.setPosition(0.0f, 0.0f);
 	backgroundSprite.setTexture(backgroundTexture);
+
+	// prepare ground
+	sf::Texture groundTexture;
+	sf::Sprite groundSprite;
 
 	groundTexture.loadFromFile("Resources/Images/Ground.png");
 	groundSprite.setPosition(0.0f, GROUND_Y);
@@ -54,7 +60,7 @@ int main()
 	// use font from image to draw text
 	ImageText scoreText;
 
-	scoreText.setColor(sf::Color::Black);
+	scoreText.SetColor(sf::Color::Black);
 
 	// frame time variables
 	std::chrono::steady_clock::time_point timePointEnd;
@@ -87,37 +93,31 @@ int main()
 			}
 
 			// move bird and pipes
-			bird.update(pipesManager.getPipes());
+			bird.Update(pipesManager.GetPipes());
 
-			if (!bird.isDead())
+			if (!bird.IsDead())
 			{
-				pipesManager.update(randomEngine);
+				pipesManager.Update(randomEngine);
 			}
 			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
 			{
-				bird.reset();
-				pipesManager.reset();
+				bird.Reset();
+				pipesManager.Reset();
 			}
 
 			// draw the screen frame
 			window.clear(sf::Color::Black);
 			window.draw(backgroundSprite);
 
-			pipesManager.draw(window);
-			bird.draw(window);
+			pipesManager.Draw(window);
+			bird.Draw(window);
 
-			// show score
-			scoreText.setText(
-				std::to_string(bird.getScore())
-			);
-			scoreText.setPosition(
-				(SCREEN_WIDTH - scoreText.getWidth()) / 2,
-				SCREEN_HEIGHT / 20
-			);
+			// show score text
+			scoreText.SetText(std::to_string(bird.GetScore()));
+			scoreText.SetPosition((SCREEN_WIDTH - scoreText.GetWidth()) / 2,SCREEN_HEIGHT / 20);
+			scoreText.Draw(window);
 
-			scoreText.draw(window);
-
-			// draw ground after pipes to close them
+			// draw ground over pipes
 			window.draw(groundSprite);
 
 			// display drawings

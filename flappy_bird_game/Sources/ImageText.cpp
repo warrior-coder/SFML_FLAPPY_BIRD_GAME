@@ -1,70 +1,60 @@
 #include "ImageText.hpp"
 
 
-ImageText::ImageText()
+ImageText::ImageText(int x, int y)
+	: _x(x)
+	, _y(y)
 {
-	fontTexture.loadFromFile("Resources/Images/Font.png");
+	_fontTexture.loadFromFile("Resources/Images/Font.png");
 }
 
-void ImageText::setColor(const sf::Color& color)
+void ImageText::SetColor(const sf::Color& color)
 {
-	this->color = color;
+	_color = color;
 }
 
-void ImageText::setText(const std::string& text)
+void ImageText::SetText(const std::string& text)
 {
-	this->text = text;
+	_text = text;
 }
 
-void ImageText::setPosition(int x, int y)
+void ImageText::SetPosition(int x, int y)
 {
-	this->x = x;
-	this->y = y;
+	_x = x;
+	_y = y;
 }
 
-void ImageText::draw(sf::RenderWindow& window)
+void ImageText::Draw(sf::RenderWindow& window)
 {
-	int characterX = x;
-	int characterY = y;
-	int characterWidth;
-	int characterHeight;
+	int characterX = _x;
+	const int characterY = _y;
+	const int characterWidth = _fontTexture.getSize().x / FONT_CHARACTERS_COUNT;
+	const int characterHeight = _fontTexture.getSize().y;
 
-	characterWidth = fontTexture.getSize().x / FONT_CHARACTERS_COUNT;
-	characterHeight = fontTexture.getSize().y;
-	characterSprite.setTexture(fontTexture);
-	characterSprite.setColor(color);
+	_characterSprite.setTexture(_fontTexture);
+	_characterSprite.setColor(_color);
 
-	for (std::string::const_iterator itText = text.cbegin(); itText != text.cend(); itText++)
+	for (std::string::const_iterator itText = _text.cbegin(); itText != _text.cend(); ++itText)
 	{
 		// set character position
-		characterSprite.setPosition(
-			static_cast<float>(characterX),
-			static_cast<float>(characterY)
-		);
+		_characterSprite.setPosition(static_cast<float>(characterX),static_cast<float>(characterY));
 
 		// cut current character sprite from Font.png image using ASCII table codes
-		characterSprite.setTextureRect(
-			sf::IntRect(
-				characterWidth * static_cast<int>(*itText - ' '),
-				0,
-				characterWidth,
-				characterHeight
-			)
-		);
+		_characterSprite.setTextureRect(sf::IntRect(characterWidth * (*itText - ' '), 0, characterWidth, characterHeight));
 
-		// move carriage horisontaly
+		// move carriage horizontally
 		characterX += characterWidth;
 
-		window.draw(characterSprite);
+		window.draw(_characterSprite);
 	}
 }
 
-int ImageText::getWidth()
+unsigned int ImageText::GetWidth() const
 {
-	return fontTexture.getSize().x / FONT_CHARACTERS_COUNT * text.length();
+	return _fontTexture.getSize().x / FONT_CHARACTERS_COUNT * _text.length();
 }
 
-int ImageText::getHeight()
+unsigned int ImageText::GetHeight() const
 {
-	return fontTexture.getSize().y;
+	return _fontTexture.getSize().y;
 }

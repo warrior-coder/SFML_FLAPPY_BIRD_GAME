@@ -8,17 +8,17 @@
 
 class PipesManager
 {
-	int generatorTimer;
+	int _generatorTimer;
 
-	std::uniform_int_distribution<int> yDistribution;
-	std::vector<Pipe> pipes;
+	std::uniform_int_distribution<int> _yDistribution;
+	std::vector<Pipe> _pipes;
 
 public:
 	PipesManager();
 	
-	std::vector<Pipe> getPipes() const;
+	std::vector<Pipe> GetPipes() const;
 	
-	void draw(sf::RenderWindow& window);
-	void reset();
-	void update(std::default_random_engine& randomEngine);
+	void Draw(sf::RenderWindow& window);
+	void Reset();
+	void Update(std::default_random_engine& randomEngine);
 };

@@ -7,29 +7,29 @@
 
 class Bird
 {
-	bool dead;
+	bool _isDead;
 
-	int x;
-	float y;
-	float ySpeed;
+	int _x;
+	float _y;
+	float _ySpeed;
 
-	unsigned short score;
+	unsigned short _score;
 	
-	sf::Image image;
-	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Image _image;
+	sf::Texture _texture;
+	sf::Sprite _sprite;
 
-	sf::SoundBuffer hitSoundBuffer, wingSoundBuffer, pointSoundBuffer;
-	sf::Sound hitSound, wingSound, pointSound;
+	sf::SoundBuffer _hitSoundBuffer, _wingSoundBuffer, _pointSoundBuffer;
+	sf::Sound _hitSound, _wingSound, _pointSound;
 
 public:
 	Bird();
 
-	bool isDead() const;
-	float getY() const;
-	unsigned short getScore() const;
+	bool IsDead() const;
+	float GetY() const;
+	unsigned short GetScore() const;
 	
-	void draw(sf::RenderWindow& window);
-	void reset();
-	void update(std::vector<Pipe> pipes);
+	void Draw(sf::RenderWindow& window);
+	void Reset();
+	void Update(std::vector<Pipe> pipes);
 };

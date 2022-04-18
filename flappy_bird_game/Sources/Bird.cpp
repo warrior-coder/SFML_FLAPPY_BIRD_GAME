@@ -7,121 +7,105 @@
 #include "Bird.hpp"
 
 
-Bird::Bird() 
+Bird::Bird()
+	: _isDead(false)
+	, _x(BIRD_START_X)
+	, _y((GROUND_Y - BIRD_SIZE) / 2.0f)
+	, _ySpeed(0.0f)
+	, _score(0)
 {
-	reset();
-	
 	// load image
-	image.loadFromFile("Resources/Images/Bird.png");
+	_texture.loadFromFile("Resources/Images/Bird.png");
+	_sprite.setTexture(_texture);
 
 	// load sound
-	hitSoundBuffer.loadFromFile("Resources/Sounds/Hit.wav");
-	hitSound.setBuffer(hitSoundBuffer);
+	_hitSoundBuffer.loadFromFile("Resources/Sounds/Hit.wav");
+	_hitSound.setBuffer(_hitSoundBuffer);
 
-	pointSoundBuffer.loadFromFile("Resources/Sounds/Point.wav");
-	pointSound.setBuffer(pointSoundBuffer);
+	_pointSoundBuffer.loadFromFile("Resources/Sounds/Point.wav");
+	_pointSound.setBuffer(_pointSoundBuffer);
 
-	wingSoundBuffer.loadFromFile("Resources/Sounds/Wing.wav");
-	wingSound.setBuffer(wingSoundBuffer);
+	_wingSoundBuffer.loadFromFile("Resources/Sounds/Wing.wav");
+	_wingSound.setBuffer(_wingSoundBuffer);
 }
 
-bool Bird::isDead() const
+bool Bird::IsDead() const
 {
-	return dead;
+	return _isDead;
 }
 
-float Bird::getY() const
+float Bird::GetY() const
 {
-	return y;
+	return _y;
 }
 
-unsigned short Bird::getScore() const
+unsigned short Bird::GetScore() const
 {
-	return score;
+	return _score;
 }
 
-void Bird::draw(sf::RenderWindow& window)
+void Bird::Draw(sf::RenderWindow& window)
 {
-	texture.loadFromImage(image);
-
-	sprite.setPosition(
-		static_cast<float>(x),
-		y
-	);
-	sprite.setTexture(texture);
-	sprite.setTextureRect(sf::IntRect(
-		BIRD_SIZE * (ySpeed <= 0.0f),
-		BIRD_SIZE * (dead == true),
+	_sprite.setPosition(static_cast<float>(_x), _y);
+	_sprite.setTextureRect(sf::IntRect(
+		BIRD_SIZE * (_ySpeed <= 0.0f),
+		BIRD_SIZE * (_isDead == true),
 		BIRD_SIZE,
 		BIRD_SIZE
 	));
-
-	window.draw(sprite);
+	window.draw(_sprite);
 }
 
-void Bird::reset()
+void Bird::Reset()
 {
-	dead = false;
-
-	x = BIRD_START_X;
-	y = (GROUND_Y - BIRD_SIZE) / 2.0f;
-
-	ySpeed = 0.0f;
-
-	score = 0;
+	_isDead = false;
+	_x = BIRD_START_X;
+	_y = (GROUND_Y - BIRD_SIZE) / 2.0f;
+	_ySpeed = 0.0f;
+	_score = 0;
 }
 
-void Bird::update(std::vector<Pipe> pipes)
+void Bird::Update(std::vector<Pipe> pipes)
 {
-	y += ySpeed;
-	ySpeed += GRAVITY;
+	_y += _ySpeed;
+	_ySpeed += GRAVITY;
 
-	if (!dead)
+	if (!_isDead)
 	{
-		if (
-			ySpeed >= 0.0f &&
-			y >= 0.0f &&
-			sf::Keyboard::isKeyPressed(sf::Keyboard::Space)
-		)
+		if (_ySpeed >= 0.0f && _y >= 0.0f && sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 		{
-			ySpeed = FLAP_SPEED;
+			_ySpeed = FLAP_SPEED;
 
-			wingSound.play();
+			_wingSound.play();
 		}
 
-		for (auto& pipe : pipes)
+		for (const auto& pipe : pipes)
 		{
-			if (x > pipe.getX() - BIRD_SIZE && x < pipe.getX() + PIPE_WIDTH)
+			if (_x > pipe.GetX() - BIRD_SIZE && _x < pipe.GetX() + PIPE_WIDTH)
 			{
-				if (y > GAP_HEIGHT + pipe.getY() - BIRD_SIZE || y < pipe.getY())
+				if (_y > GAP_HEIGHT + pipe.GetY() - BIRD_SIZE || _y < pipe.GetY())
 				{
-					if (!dead)
-					{
-						hitSound.play();
-					}
+					if (!_isDead) _hitSound.play();
 
-					dead = true;
-					ySpeed = 0.0f;
+					_isDead = true;
+					_ySpeed = 0.0f;
 				}
 			}
-			else if (x == pipe.getX() + 2 * BIRD_SIZE)
+			else if (_x == pipe.GetX() + 2 * BIRD_SIZE)
 			{
-				score++;
+				_score++;
 
-				pointSound.play();
+				_pointSound.play();
 			}
 		}
 	}
 
-	if (y >= GROUND_Y - BIRD_SIZE)
+	if (_y >= GROUND_Y - BIRD_SIZE)
 	{
-		if (!dead)
-		{
-			hitSound.play();
-		}
+		if (!_isDead) _hitSound.play();
 
-		dead = true;
-		ySpeed = 0.0f;
-		y = GROUND_Y - BIRD_SIZE;
+		_isDead = true;
+		_ySpeed = 0.0f;
+		_y = GROUND_Y - BIRD_SIZE;
 	}
 }

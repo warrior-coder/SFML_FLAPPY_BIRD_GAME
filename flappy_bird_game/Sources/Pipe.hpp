@@ -7,21 +7,19 @@
 
 class Pipe
 {
-	float x;
-	int y;
+	float _x;
+	int _y;
 
-	sf::Image image;
-	sf::Texture texture;
-	sf::Sprite sprite;
+	sf::Texture _texture;
+	sf::Sprite _sprite;
 
 public:
 	Pipe(float x, int y);
 
-	bool isGone();
+	bool IsGone() const;
+	float GetX() const;
+	int GetY() const;
 
-	float getX();
-	int getY();
-
-	void draw(sf::RenderWindow& window);
-	void update();
+	void Draw(sf::RenderWindow& window);
+	void Update();
 };

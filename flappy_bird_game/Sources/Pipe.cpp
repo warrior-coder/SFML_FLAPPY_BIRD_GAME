@@ -1,62 +1,43 @@
 #include "Pipe.hpp"
 
 
-Pipe::Pipe(float x, int y)
-	: x(x)
-	, y(y)
+Pipe::Pipe(const float x, const int y)
+	: _x(x)
+	, _y(y)
 {
-	image.loadFromFile("Resources/Images/Pipe.png");
+	_texture.loadFromFile("Resources/Images/Pipe.png");
+	_sprite.setTexture(_texture); // using 1 sprite to draw 2 pipes
 }
 
-bool Pipe::isGone()
+bool Pipe::IsGone() const
 {
-	return (x <= -PIPE_WIDTH);
+	return (_x <= -PIPE_WIDTH);
 }
 
-float Pipe::getX()
+float Pipe::GetX() const
 {
-	return x;
+	return _x;
 }
 
-int Pipe::getY()
+int Pipe::GetY() const
 {
-	return y;
+	return _y;
 }
 
-void Pipe::draw(sf::RenderWindow& window)
+void Pipe::Draw(sf::RenderWindow& window)
 {
-	// using 1 sprite to draw 2 pipes
-	texture.loadFromImage(image);
-	
 	// top pipe
-	sprite.setPosition(
-		x,
-		static_cast<float>(y - SCREEN_HEIGHT)
-	);
-	sprite.setTexture(texture);
-	sprite.setTextureRect(sf::IntRect(
-		PIPE_WIDTH,
-		0,
-		PIPE_WIDTH,
-		SCREEN_HEIGHT
-	));
-	window.draw(sprite);
+	_sprite.setTextureRect(sf::IntRect(PIPE_WIDTH, 0, PIPE_WIDTH, SCREEN_HEIGHT));
+	_sprite.setPosition(_x, static_cast<float>(_y - SCREEN_HEIGHT));
+	window.draw(_sprite);
 
 	// bottom pipe
-	sprite.setPosition(
-		x,
-		static_cast<float>(y + GAP_HEIGHT)
-	);
-	sprite.setTextureRect(sf::IntRect(
-		0,
-		0,
-		PIPE_WIDTH,
-		SCREEN_HEIGHT
-	));
-	window.draw(sprite);
+	_sprite.setTextureRect(sf::IntRect(0, 0, PIPE_WIDTH, SCREEN_HEIGHT));
+	_sprite.setPosition(_x, static_cast<float>(_y + GAP_HEIGHT));
+	window.draw(_sprite);
 }
 
-void Pipe::update()
+void Pipe::Update()
 {
-	x -= BIRD_SPEED;
+	_x -= BIRD_SPEED;
 }

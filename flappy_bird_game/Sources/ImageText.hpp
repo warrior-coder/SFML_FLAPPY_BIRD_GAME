@@ -8,23 +8,24 @@
 
 class ImageText
 {
-	int x, y;
+	int _x;
+	int _y;
 
-	std::string text;
-	sf::Color color;
+	std::string _text;
+	sf::Color _color;
 
-	sf::Texture fontTexture;
-	sf::Sprite characterSprite;
+	sf::Texture _fontTexture;
+	sf::Sprite _characterSprite;
 
 public:
-	ImageText();
+	explicit ImageText(int x = 0, int y = 0);
 
-	int getWidth();
-	int getHeight();
+	unsigned int GetWidth() const;
+	unsigned int GetHeight() const;
 
-	void setText(const std::string& text);
-	void setColor(const sf::Color& color);
-	void setPosition(int x, int y);
+	void SetText(const std::string& text);
+	void SetColor(const sf::Color& color);
+	void SetPosition(int x, int y);
 
-	void draw(sf::RenderWindow& window);
+	void Draw(sf::RenderWindow& window);
 };

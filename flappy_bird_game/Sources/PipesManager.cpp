@@ -2,56 +2,54 @@
 
 
 PipesManager::PipesManager()
-	: yDistribution(PIPE_INDENT, GROUND_Y - GAP_HEIGHT - PIPE_INDENT)
-	, generatorTimer(GENERATOR_TIMER_DURATION / 2)
+	: _generatorTimer(GENERATOR_TIMER_DURATION / 2)
+	, _yDistribution(PIPE_INDENT, GROUND_Y - GAP_HEIGHT - PIPE_INDENT)
 {}
 
-void PipesManager::draw(sf::RenderWindow& window)
+void PipesManager::Draw(sf::RenderWindow& window)
 {
-	for (auto& pipe : pipes)
+	for (auto& pipe : _pipes)
 	{
-		pipe.draw(window);
+		pipe.Draw(window);
 	}
 }
 
-void PipesManager::reset()
+void PipesManager::Reset()
 {
-	generatorTimer = GENERATOR_TIMER_DURATION / 2;
-	pipes.clear();
+	_generatorTimer = GENERATOR_TIMER_DURATION / 2;
+	_pipes.clear();
 }
 
-void PipesManager::update(std::default_random_engine& randomEngine)
+void PipesManager::Update(std::default_random_engine& randomEngine)
 {
 	// if time to generate new pipe
-	if (generatorTimer > GENERATOR_TIMER_DURATION)
+	if (_generatorTimer > GENERATOR_TIMER_DURATION)
 	{
-		generatorTimer = 0;
+		_generatorTimer = 0;
 
-		pipes.push_back(
-			Pipe(SCREEN_WIDTH, yDistribution(randomEngine))
-		);
+		_pipes.emplace_back(Pipe(SCREEN_WIDTH, _yDistribution(randomEngine)));
 	}
-	generatorTimer++;
+	_generatorTimer++;
 
 	// update every pipe
-	for (auto& pipe : pipes)
+	for (auto& pipe : _pipes)
 	{
-		pipe.update();
+		pipe.Update();
 	}
 
-	for (auto itPipe = pipes.begin(); itPipe != pipes.end(); itPipe++)
+	for (auto itPipe = _pipes.begin(); itPipe != _pipes.end(); ++itPipe)
 	{
 		// when the pipe go beyond the screen we delete it
-		if (itPipe->isGone())
+		if (itPipe->IsGone())
 		{
-			pipes.erase(itPipe);
+			_pipes.erase(itPipe);
 
 			break;
 		}
 	}
 }
 
-std::vector<Pipe> PipesManager::getPipes() const
+std::vector<Pipe> PipesManager::GetPipes() const
 {
-	return pipes;
+	return _pipes;
 }
